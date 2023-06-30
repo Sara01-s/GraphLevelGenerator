@@ -1,0 +1,15 @@
+D:\sara\PYF_3\Grafos\bin\Debug\net6.0\Grafos.exe
+D:\sara\PYF_3\Grafos\bin\Debug\net6.0\Grafos.deps.json
+D:\sara\PYF_3\Grafos\bin\Debug\net6.0\Grafos.runtimeconfig.json
+D:\sara\PYF_3\Grafos\bin\Debug\net6.0\Grafos.dll
+D:\sara\PYF_3\Grafos\bin\Debug\net6.0\Grafos.pdb
+D:\sara\PYF_3\Grafos\obj\Debug\net6.0\Grafos.csproj.AssemblyReference.cache
+D:\sara\PYF_3\Grafos\obj\Debug\net6.0\Grafos.GeneratedMSBuildEditorConfig.editorconfig
+D:\sara\PYF_3\Grafos\obj\Debug\net6.0\Grafos.AssemblyInfoInputs.cache
+D:\sara\PYF_3\Grafos\obj\Debug\net6.0\Grafos.AssemblyInfo.cs
+D:\sara\PYF_3\Grafos\obj\Debug\net6.0\Grafos.csproj.CoreCompileInputs.cache
+D:\sara\PYF_3\Grafos\obj\Debug\net6.0\Grafos.dll
+D:\sara\PYF_3\Grafos\obj\Debug\net6.0\refint\Grafos.dll
+D:\sara\PYF_3\Grafos\obj\Debug\net6.0\Grafos.pdb
+D:\sara\PYF_3\Grafos\obj\Debug\net6.0\Grafos.genruntimeconfig.cache
+D:\sara\PYF_3\Grafos\obj\Debug\net6.0\ref\Grafos.dll
