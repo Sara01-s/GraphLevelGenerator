@@ -4,11 +4,15 @@ using UnityEngine;
 using System.Linq;
 
 internal sealed class MapGenerator : MonoBehaviour {
-
-    [SerializeField] private GameObject _piece;
+    [Header("Generation Settings")]
     [SerializeField] private Vector2Int _mapSize = new(10, 10);
     [SerializeField] private float _cellGenerationDuration = 0.2f;
- 
+    [SerializeField] private GameObject _lastPiece;
+    [SerializeField] private GameObject[] _pieces;
+    [Space(20), Header("Extra")]
+    [SerializeField] private AudioClip _spawnSound;
+    [SerializeField] private AudioClip _doneSound;
+
     private Graph _graph;
 
     private void Awake() {
@@ -86,24 +90,51 @@ internal sealed class MapGenerator : MonoBehaviour {
             forbiddenCells.Add(randomCellCandidate);                                            // Prohibimos pasar por esta celda nuevamente
 
             if (road.Last().x == _mapSize.x - 1)                                                // Si es la fila 9, Llegamos al final yaay :)
-                SpawnLastPiece();
+                Debug.Log("Termine de generar!");
         }
 
         // Ahora _road solo contiene piezas que pertenezcan a nuestro camino
 
-        Debug.Log("Empiezo");
+        Debug.Log("Empecé a generar!");
         foreach (var cell in road) {
-            var obj = Instantiate(_piece, transform);
-            var objPos = cell.x * Vector3.right * obj.transform.localScale.x + cell.y * Vector3.forward * obj.transform.localScale.z;
-            obj.transform.position = objPos;
+            if (cell.x == _mapSize.x - 1) {
+                SpawnLastPieceIn(road.Last());
+                Debug.Log("Termine de generar!");
+                break;
+            }
 
-            Debug.Log($"estoy en ({cell.x}, {cell.y}) y ahora");
+            SpawnRandomPieceIn(cell);
             yield return new WaitForSeconds(_cellGenerationDuration);
         }
-        Debug.Log("Termine!");
     }
 
-    private void SpawnLastPiece() {
-        Debug.Log("Callback para cuando se spawnea la última pieza");
+    private void SpawnRandomPieceIn(Vector2 cell) {
+        var rand = Random.Range(0, _pieces.Length);
+        var piece = Instantiate(_pieces[rand], transform);
+        var calculatedPiecePos = cell.x * Vector3.right * piece.transform.localScale.x + cell.y * Vector3.forward * piece.transform.localScale.z;
+
+        piece.transform.position = calculatedPiecePos;
+
+        Debug.Log($"estoy en ({cell.x}, {cell.y}) y ahora");
+        PlaySound(piece, _spawnSound, true);
+    }
+
+    private void SpawnLastPieceIn(Vector2 cell) {
+        var piece = Instantiate(_lastPiece, transform);
+        var calculatedPiecePos = cell.x * Vector3.right * piece.transform.localScale.x + cell.y * Vector3.forward * piece.transform.localScale.z;
+
+        piece.transform.position = calculatedPiecePos;
+
+        Debug.Log($"Terminé en ({cell.x}, {cell.y})");
+        PlaySound(piece, _doneSound, false);
+    }
+
+
+    private float _pitch;
+    private void PlaySound(GameObject from, AudioClip sound, bool incrementPitch) {
+        var audio = from.AddComponent<AudioSource>();
+        audio.PlayOneShot(sound);
+
+        audio.pitch = (incrementPitch)? audio.pitch = _pitch+=0.1f : audio.pitch;
     }
 }
